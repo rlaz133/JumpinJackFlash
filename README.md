@@ -13,9 +13,9 @@ Winning condition: reaching the goal at the top. Losing condition: touching the 
 
 
 ## Backlog
-Add an alternative control mode (wasd or arrows)
-Add sound effects
-Add difficulty levels that modify the speed of the scroll
+- Add an alternative control mode (wasd or arrows)
+- Add sound effects
+- Add difficulty levels that modify the speed of the scroll
 
 
 ## Data structure
