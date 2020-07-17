@@ -9,8 +9,10 @@ function buildDom(htmlString) {
 function screenSelector(){
     let startBtn = document.querySelector('#start-btn');
     startBtn.addEventListener('click', ()=>loadGame());
-    // let splashBtn = document.querySelector('#splash-btn');
-    // splashBtn.addEventListener('click', ()=>loadSplash());
+    let splashBtn = document.querySelector('#splash-btn');
+    splashBtn.addEventListener('click', ()=>loadSplash());
+    let retryBtn = document.querySelector('#retry-btn');
+    retryBtn.addEventListener('click', ()=>loadRetry());
 }
 
 //loads the game screen and kickstarts the canvas
@@ -19,7 +21,6 @@ function loadGame(){
     let canvasCode = buildDom(`<canvas id='canvas' width=800px; height=700px></canvas>`);
     document.getElementById('container').appendChild(canvasCode)
     startGame();
-    screenSelector()
 }
 
 //loads the splash screen
@@ -32,7 +33,23 @@ function loadSplash(){
         </div>`
         )
     document.getElementById('container').appendChild(splashCode)
-    screenSelector()
+    screenSelector();
+}
+
+//loads the retry screen
+function loadRetry(){
+    document.getElementById('container').innerHTML='';
+    let retryCode = buildDom (
+        `<div id='retryScreen'>
+        <h1>Retry?</h1>
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-secondary">Yes</button>
+            <button type="button" class="btn btn-secondary">No</button>
+          </div>
+    </div>`
+    )
+    document.getElementById('container').appendChild(retryCode)
+    screenSelector();
 }
 
 window.addEventListener('load', ()=>{screenSelector()})
