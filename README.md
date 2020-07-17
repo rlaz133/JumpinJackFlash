@@ -96,12 +96,12 @@ Definition of the different states and their transition (transition functions)
 
 
 ### Trello
-[Link url](https://trello.com)
+[Link url](https://trello.com/b/Kf3s6baJ/jumpin-jack-flash-game)
 
 
 ### Git
 URls for the project repo and deploy
-[Link Repo](http://github.com)
+[Link Repo](https://github.com/rlaz133/JumpinJackFlash)
 [Link Deploy](http://github.com)
 
 
