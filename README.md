@@ -62,8 +62,6 @@ Winning condition: reaching the goal at the top. Losing condition: touching the 
 - Goal(){} extends Object
 
 
-Classes and methods definition.
-
 
 ## States y States Transitions
 Definition of the different states and their transition (transition functions)
@@ -74,7 +72,24 @@ Definition of the different states and their transition (transition functions)
 
 
 ## Task
-Task definition in order of priority
+
+- 1 stage - build the skelleton
+  - build DOM
+  - buildSplashScreen
+  - buildGameScreen
+- 2 stage - create the assets
+  - Game screen basics: start game, draw stage (background and floor)
+  - Create player character: create class, draw on Game screen
+  - Create objects
+- 3 stage - build the gameplay
+   - Build PC movement
+   - Build collisions
+   - Draw objects on stage
+ - 4 stage - Put everything together
+   - Incorporate collisions on the stage
+   - Create scrolling
+   - Game over function
+   - Build Retry screen
 
 
 ## Links
