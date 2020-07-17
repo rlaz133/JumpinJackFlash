@@ -37,26 +37,26 @@ Add difficulty levels that modify the speed of the scroll
 ### Player.js
 
 - Player (){}
--  this.x
--  this.y
--  this.border[upper, lower, right, left]
--  this.direction
+  - this.x
+  - this.y
+  - this.border[upper, lower, right, left]
+  - this.direction
 - checkCollisions(){}
--  checkBottomStage
--  checkPlatform
--  chek Spike
+  - checkBottomStage
+  - checkPlatform
+  - check Spike
 - move(){}
--  jump
--  left
--  right
--  fall
+  - jump
+  - left
+  - right
+  - fall
 
 ### Objects.js
 
 - Object(){}
--  this.x
--  this.y
--  this.border[upper, lower, right, left]
+  - this.x
+  - this.y
+  - this.border[upper, lower, right, left]
 - Platform(){} extends Object
 - Spike(){} extends Object
 - Goal(){} extends Object
