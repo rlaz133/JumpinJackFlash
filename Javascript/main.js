@@ -17,8 +17,8 @@ function screenSelector(){
 
 //loads the game screen and kickstarts the canvas
 function loadGame(){
-    document.getElementById('splashScreen').remove();
-    let canvasCode = buildDom(`<canvas id='canvas' width=800px; height=700px></canvas>`);
+    document.getElementById('container').innerHTML='';
+    let canvasCode = buildDom(`<canvas id='canvas' width=700px; height=700px></canvas>`);
     document.getElementById('container').appendChild(canvasCode)
     startGame();
 }
@@ -41,11 +41,11 @@ function loadRetry(){
     document.getElementById('container').innerHTML='';
     let retryCode = buildDom (
         `<div id='retryScreen'>
-        <h1>Retry?</h1>
-        <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-secondary">Yes</button>
-            <button type="button" class="btn btn-secondary">No</button>
-          </div>
+            <h1>Retry?</h1>
+            <div>
+              <button id="start-btn">Yes</button>
+              <button id="splash-btn">No</button>
+            </div>
     </div>`
     )
     document.getElementById('container').appendChild(retryCode)
