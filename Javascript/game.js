@@ -5,7 +5,17 @@ function startGame(){
     screen.style.backgroundColor = '#3874F7';
     let ctx = screen.getContext('2d');
     let frame =0;
-    let platforms =[];
+    let randy = Math.floor(Math.random()*400)
+        let randx = Math.floor(Math.random()*630)
+        let randw = Math.floor(Math.random()*4) + 3
+        
+    let platforms =[
+        {x: 0, y: 630, width:10},
+        {x: 450, y: 420, width:5},
+        {x: 100, y:210, width:3},
+        {x: 500, y:210, width:3},
+        {x: randx, y: 0, width: randw}];
+
     let char = new Character();
     let charpic = new Image();
     let goRight = false;
@@ -14,8 +24,14 @@ function startGame(){
     let framejump =0;
     let fg = new Image();
     fg.src = 'grass.png';
+    let rightcollision = false
 
-
+function checkCollisions(){
+    platforms.forEach((platform, i)=>{
+    if (char.x+charpic.width>=platform.x && char.y<platform.y+platform.height && char.y+charpic.height>platform.y){
+        rightcollision = true;
+        console.log (rightcollision)}
+})}
     
     //Main game interval
     intervalId = setInterval(() => {
@@ -52,17 +68,17 @@ function startGame(){
 
     //Main drawing function that will be updated on the interval
     function drawMain(){
-        generatePlatform(0, 630, 10);
+        ctx.clearRect(0, 0, screen.width,screen.height);
+        generatePlatform();
         drawCharacter();
-        if (platforms.length <2) {randomizePlatform()};
+        checkCollisions()
+        
     }
-
 
     //Updates the Player character
     function drawCharacter(){
         if (char.direction === 'right') {charpic.src = 'p1_stand.png';}
         if (char.direction === 'left') {charpic.src = 'p1_stand_left.png';}
-        ctx.clearRect(char.x, char.y, charpic.width,charpic.height);
         characterMove();
         ctx.drawImage(charpic, char.x, char.y)
     }
@@ -72,12 +88,12 @@ function startGame(){
         if (jump && framejump +30 > frame){
             if (char.direction === 'right'){
                 char.y-=5
-                if (char.x + charpic.width < screen.width){char.x += 5}
+                if (char.x + char.width < screen.width){char.x += 5}
                 else {char.x =0};
             }
             else if (char.direction === 'left'){
                 if (char.x > 0){char.x -= 5}
-                else {char.x = screen.width-charpic.width}
+                else {char.x = screen.width-char.width}
                 char.y -= 5;
             }
         }
@@ -85,31 +101,44 @@ function startGame(){
                 jump = false;
         }
         if (goRight && !jump){
-            if (char.x + charpic.width < screen.width){char.x += 5}
+            if (char.x + char.width < screen.width){char.x += 5}
             else {char.x =0};
             char.direction='right';
         }
         else if (goLeft && !jump){
             if (char.x > 0){char.x -= 5}
-            else {char.x = screen.width-charpic.width}
+            else {char.x = screen.width-char.width}
             char.direction='left';
         }
     }
 
-
     //Creates a platform in the coordinates and of the width specified and pushes it into an array
-    function generatePlatform (x, y, width){
-        for (i=0; i<width; i++){
-        ctx.drawImage(fg, x+fg.width*i, y);}
-        platforms.push (fg);
+    function generatePlatform (){
+
+        for (i=0; i<platforms.length; i++){
+            //let platfomrCount = Math.floor(Math.random()*8)
+            for (let j =0; j< platforms[i].width; j++){
+                ctx.drawImage(fg, (platforms[i].x+ (70*j)), platforms[i].y);
+            }
+            
+            platforms[i].y++
+            if ( platforms[i].y == 200){
+                let randy = Math.floor(Math.random()*400)
+                let randx = Math.floor(Math.random()*630)
+                let randw = Math.floor(Math.random()*4) + 3
+                platforms.push ({
+                    x: randx,
+                    y: 0 ,
+                    width: randw,
+                });
+            }
+        }
+        
     }
 
     //Calculates coordinates to feed the generatePlatform function
 
     function randomizePlatform(){
-        let randw = Math.floor(Math.random()*10)
-        let randx = Math.floor(Math.random()*630)
-        // let randy = Math.floor(Math.random()*400)
-        generatePlatform(randx, 30, randw)
+        generatePlatform()
     }
 }
