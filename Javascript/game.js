@@ -8,7 +8,6 @@ function startGame(){
     let platforms =[];
     let char = new Character();
     let charpic = new Image();
-    charpic.src = 'p1_stand.png';
     let goRight = false;
     let goLeft = false;
     let jump = false;
@@ -61,6 +60,8 @@ function startGame(){
 
     //Updates the Player character
     function drawCharacter(){
+        if (char.direction === 'right') {charpic.src = 'p1_stand.png';}
+        if (char.direction === 'left') {charpic.src = 'p1_stand_left.png';}
         ctx.clearRect(char.x, char.y, charpic.width,charpic.height);
         characterMove();
         ctx.drawImage(charpic, char.x, char.y)
