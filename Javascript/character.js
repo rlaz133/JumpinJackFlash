@@ -5,4 +5,5 @@ class Character{
         // this.borders
         this.direction = 'right'
     }
+
 }
