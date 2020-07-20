@@ -1,5 +1,9 @@
 //startGame encompasses all the game functions to make sure they get loaded after clicking on Start.
 //by itself, 
+// let randw = Math.floor(Math.random()*10)
+// let randx = Math.floor(Math.round()*630)
+// console.log(randx, randw)
+
 
 function startGame(){
     let screen = document.getElementById('canvas');
@@ -13,6 +17,7 @@ function startGame(){
     function drawMain(){
         generatePlatform(0, 630, 10);
         drawCharacter();
+        randomizePlatform();
     }
 
     //Draws a platform in the coordinates and of the width specified
@@ -31,5 +36,12 @@ function startGame(){
         ctx.drawImage(charpic, char.x, char.y)
     }
 
+    //Calculates coordinates to feed the generatePlatform function
 
+    function randomizePlatform(){
+        let randw = Math.floor(Math.random()*10)
+        let randx = Math.floor(Math.random()*630)
+        let randy = Math.floor(Math.random()*400)
+        generatePlatform(randx, randy, randw)
+    }
 }
