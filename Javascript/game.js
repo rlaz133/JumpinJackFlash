@@ -11,7 +11,7 @@ function startGame(){
         
     let platforms =[
         {x: 0, y: 630, width:10},
-        {x: 450, y: 420, width:5},
+        {x: 250, y: 430, width:5},
         {x: 100, y:210, width:3},
         {x: 500, y:210, width:3},
         {x: randx, y: 0, width: randw}];
@@ -24,13 +24,25 @@ function startGame(){
     let framejump =0;
     let fg = new Image();
     fg.src = 'grass.png';
-    let rightcollision = false
+    let rightcollision
+    let leftcollision
+    let bottomcollision;
+    let topcollision
 
 function checkCollisions(){
     platforms.forEach((platform, i)=>{
-    if (char.x+charpic.width>=platform.x && char.y<platform.y+platform.height && char.y+charpic.height>platform.y){
-        rightcollision = true;
-        console.log (rightcollision)}
+     if (char.x+char.width>=platform.x && char.x+char.width<platform.x+5 && char.y<platform.y+70 && char.y+char.height>platform.y){
+        rightcollision = true;}
+    if (char.x<=platform.x+70*platform.width && char.x>platform.x-5+70*platform.width && char.y<platform.y+70 && char.y+char.height>platform.y){
+        leftcollision =true;
+    }
+    if(char.y+char.height>=platform.y && char.y+char.height<platform.y+5 && char.x<platform.x+70*platform.width && char.x+char.width > platform.x){
+        bottomcollision=true;
+    }
+    if(char.y<=platform.y+70 && char.y>platform.y+65 && char.x<platform.x+70*platform.width && char.x+char.width > platform.x){
+        topcollision=true;
+        console.log (platform)
+    }
 })}
     
     //Main game interval
@@ -41,7 +53,7 @@ function checkCollisions(){
 
     //Here is the listener for the character movement
     document.addEventListener('keydown', function(event){
-        if (event.key === 'w'){
+        if (event.key === 'w' &&  bottomcollision){
             jump = true;
             framejump = frame;
         }
@@ -68,10 +80,15 @@ function checkCollisions(){
 
     //Main drawing function that will be updated on the interval
     function drawMain(){
+        rightcollision=false;
+        leftcollision=false;
+        bottomcollision=false;
+        topcollision=false;
         ctx.clearRect(0, 0, screen.width,screen.height);
+        checkCollisions()
         generatePlatform();
         drawCharacter();
-        checkCollisions()
+
         
     }
 
@@ -85,27 +102,30 @@ function checkCollisions(){
 
     //Here is the logic for the character movement
     function characterMove(){
-        if (jump && framejump +30 > frame){
-            if (char.direction === 'right'){
+
+        char.y++;
+        if (!bottomcollision){char.y++}
+        if (jump && framejump +60 > frame && !topcollision){
+            if (char.direction === 'right' && !rightcollision){
                 char.y-=5
                 if (char.x + char.width < screen.width){char.x += 5}
                 else {char.x =0};
             }
-            else if (char.direction === 'left'){
+            else if (char.direction === 'left'&& !leftcollision){
                 if (char.x > 0){char.x -= 5}
                 else {char.x = screen.width-char.width}
                 char.y -= 5;
             }
         }
-        if (jump && framejump +30 === frame){
+        if (jump && framejump +60 === frame){
                 jump = false;
         }
-        if (goRight && !jump){
+        if (goRight && !jump && !rightcollision){
             if (char.x + char.width < screen.width){char.x += 5}
             else {char.x =0};
             char.direction='right';
         }
-        else if (goLeft && !jump){
+        else if (goLeft && !jump && !leftcollision){
             if (char.x > 0){char.x -= 5}
             else {char.x = screen.width-char.width}
             char.direction='left';
