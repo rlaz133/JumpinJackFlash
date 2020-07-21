@@ -21,12 +21,10 @@ function startGame(){
     let randw = Math.floor(Math.random()*4) + 3      
     let platforms =[
         {x: 0, y: 630, width:10},
-        {x: 250, y: 430, width:5},
-        {x: 100, y:250, width:3},
-        {x: 500, y:250, width:3},
-        {x: 600, y:100, width:2},
-        {x: 50, y:100, width:2},
-        {x: randx, y: 0, width: randw}
+        {x: 300, y: 430, width:3},
+        {x: 000, y:300, width:2},
+        {x: 300, y:125, width:4},
+        {x: randx, y: -70, width: randw}
     ];
     let char = new Character();
     let charpic = new Image();
@@ -101,17 +99,17 @@ function startGame(){
     //Here is the logic for the character movement
     function characterMove(){
         char.y++;
-        if (!bottomcollision){char.y++}
+        if (!bottomcollision){char.y+=3}
         if (jump && framejump +60 > frame && !topcollision){
             if (char.direction === 'right' && !rightcollision){
-                char.y-=5;
+                char.y-=7;
                 if (char.x + char.width < screen.width){char.x += 5}
                 else {char.x =0};
             }
             else if (char.direction === 'left'&& !leftcollision){
                 if (char.x > 0){char.x -= 5}
                 else {char.x = screen.width-char.width}
-                char.y -= 5;
+                char.y -= 7;
             }
         }
         if (jump && framejump +60 === frame){
@@ -136,13 +134,13 @@ function startGame(){
                 ctx.drawImage(fg, (platforms[i].x+ (70*j)), platforms[i].y);
             }          
             platforms[i].y++
-            if ( platforms[i].y == 200){
-                let randy = Math.floor(Math.random()*400)
+            if ( platforms[i].y == 100){
+                // let randy = Math.floor(Math.random()*400)
                 let randx = Math.floor(Math.random()*630)
                 let randw = Math.floor(Math.random()*4) + 3
                 platforms.push ({
                     x: randx,
-                    y: 0 ,
+                    y: -70 ,
                     width: randw,
                 });
             }

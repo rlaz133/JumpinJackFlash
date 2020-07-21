@@ -11,8 +11,8 @@ function screenSelector(){
     startBtn.addEventListener('click', ()=>loadGame());
     let splashBtn = document.querySelector('#splash-btn');
     splashBtn.addEventListener('click', ()=>loadSplash());
-    let retryBtn = document.querySelector('#retry-btn');
-    retryBtn.addEventListener('click', ()=>loadRetry());
+
+
 }
 
 //loads the game screen and kickstarts the canvas
@@ -27,9 +27,9 @@ function loadGame(){
 function loadSplash(){
     document.getElementById('container').innerHTML='';
     let splashCode = buildDom(
-        `<div id='splashScreen'>
+        `<div id='splashScreen' class='screen'>
             <h1 id='title'> Jumping Jack Flash</h1>
-            <button id="start-btn">Start</button>
+            <button id="start-btn" class='button'>Start</button>
         </div>`
         )
     document.getElementById('container').appendChild(splashCode)
@@ -40,16 +40,19 @@ function loadSplash(){
 function loadRetry(){
     document.getElementById('container').innerHTML='';
     let retryCode = buildDom (
-        `<div id='retryScreen'>
+        `<div id='retryScreen' class='screen' >
             <h1>Retry?</h1>
             <div>
-              <button id="start-btn">Yes</button>
-              <button id="splash-btn">No</button>
+              <button id="yes-btn" class ='button'>Yes</button>
+              <button id="no-btn" class = 'button'>No</button>
             </div>
     </div>`
     )
     document.getElementById('container').appendChild(retryCode)
-    screenSelector();
+    let yesBtn = document.querySelector('#yes-btn');
+    yesBtn.addEventListener('click', ()=>loadGame());
+    let noBtn = document.querySelector('#no-btn');
+    noBtn.addEventListener('click', ()=>loadSplash());
 }
 
 window.addEventListener('load', ()=>{screenSelector()})
