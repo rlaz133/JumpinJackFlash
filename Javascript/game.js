@@ -48,6 +48,7 @@ function startGame(){
     let bottomcollision;
     let topcollision;
     let seconds;
+    let jumped = false;
 
 
 
@@ -70,11 +71,15 @@ function startGame(){
 
     //Listener for the player input
     function inputHandler (){
+
     document.addEventListener('keydown', function(event){
         if (event.key === 'w' &&  bottomcollision){
             jump = true;
             framejump = frame;
-            jumpsound.play();
+            if (!jumped){
+                jumpsound.play();
+                jumped=true;
+            }
         }
         else if (event.key === 'd'){
             goRight = true;
@@ -101,7 +106,9 @@ function startGame(){
     //Updates the Player character
     function drawCharacter(){
         if (char.direction === 'right') {charpic.src = 'p1_stand.png';}
+        if (char.direction === 'right' && jump) {charpic.src = 'p1_jump.png'}
         if (char.direction === 'left') {charpic.src = 'p1_stand_left.png';}
+        if (char.direction === 'left' && jump) {charpic.src = 'p1_jump_left.png';}
         characterMove();
         ctx.drawImage(charpic, char.x, char.y)
     }
@@ -124,6 +131,7 @@ function startGame(){
         }
         if (jump && framejump +60 === frame){
                 jump = false;
+                jumped = false;
         }
         if (goRight && !jump && !rightcollision){
             if (char.x + char.width < screen.width){char.x += 5}
