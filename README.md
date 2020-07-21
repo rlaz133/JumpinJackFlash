@@ -22,53 +22,41 @@ Winning condition: reaching the goal at the top. Losing condition: touching the 
 
 ### Main.js
 
-- buildSplashScreen () {}
-- buildGameScreen () {}
-- buildRetryScreen () {}
+- loadSplash () {}
+- loadGame () {}
+- loadRetry () {}
+- screenSelector(){}
+- buildDom(){}
 
 ### Game.js
 
-- drawStage () {}
-- drawPlayer () {}
-- updateStage (){}
-- clearStage (){}
-- gameOver(){}
-
-### Player.js
-
-- Player (){}
+- Character(){}
   - this.x
   - this.y
-  - this.border[upper, lower, right, left]
+  - this.width
+  - this.height
   - this.direction
-- checkCollisions(){}
-  - checkBottomStage
-  - checkPlatform
-  - check Spike
-- move(){}
-  - jump
-  - left
-  - right
-  - fall
+ 
+- Platforms [{x: , y: , w: }, ...]
 
-### Objects.js
-
-- Object(){}
-  - this.x
-  - this.y
-  - this.border[upper, lower, right, left]
-- Platform(){} extends Object
-- Spike(){} extends Object
-- Goal(){} extends Object
+- drawMain (){}
+- inputHandle (){}
+- drawCharacter () {}
+- moveCharacter () {}
+- generatePlatform (){}
+- checkCollisions (){}
+- cleanCollisions (){}
+- gameOver(){}
+- gameTime(){}
 
 
 
 ## States y States Transitions
 Definition of the different states and their transition (transition functions)
 
-- splashScreen
-- gameScreen
-- retryScreen
+- splashScreen into gameScreen
+- gameScreen into retryScreen
+- retryScreen into splashScreen or gameScreen
 
 
 ## Task
