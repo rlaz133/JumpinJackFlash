@@ -1,3 +1,14 @@
+
+class Character{
+    constructor(){
+        this.x=10
+        this.y=538
+        this.width =66
+        this.height=92
+        this.direction = 'right'
+    }
+}
+
 //startGame encompasses all the game functions to make sure they get loaded after clicking on Start.
 function startGame(){
     let screen = document.getElementById('canvas');
@@ -6,16 +17,17 @@ function startGame(){
     let ctx = screen.getContext('2d');
     let frame =0;
     let randy = Math.floor(Math.random()*400)
-        let randx = Math.floor(Math.random()*630)
-        let randw = Math.floor(Math.random()*4) + 3
-        
+    let randx = Math.floor(Math.random()*630)
+    let randw = Math.floor(Math.random()*4) + 3      
     let platforms =[
         {x: 0, y: 630, width:10},
         {x: 250, y: 430, width:5},
-        {x: 100, y:210, width:3},
-        {x: 500, y:210, width:3},
-        {x: randx, y: 0, width: randw}];
-
+        {x: 100, y:250, width:3},
+        {x: 500, y:250, width:3},
+        {x: 600, y:100, width:2},
+        {x: 50, y:100, width:2},
+        {x: randx, y: 0, width: randw}
+    ];
     let char = new Character();
     let charpic = new Image();
     let goRight = false;
@@ -24,34 +36,33 @@ function startGame(){
     let framejump =0;
     let fg = new Image();
     fg.src = 'grass.png';
-    let rightcollision
-    let leftcollision
+    let rightcollision;
+    let leftcollision;
     let bottomcollision;
-    let topcollision
+    let topcollision;
+    let seconds;
 
-function checkCollisions(){
-    platforms.forEach((platform, i)=>{
-     if (char.x+char.width>=platform.x && char.x+char.width<platform.x+5 && char.y<platform.y+70 && char.y+char.height>platform.y){
-        rightcollision = true;}
-    if (char.x<=platform.x+70*platform.width && char.x>platform.x-5+70*platform.width && char.y<platform.y+70 && char.y+char.height>platform.y){
-        leftcollision =true;
-    }
-    if(char.y+char.height>=platform.y && char.y+char.height<platform.y+5 && char.x<platform.x+70*platform.width && char.x+char.width > platform.x){
-        bottomcollision=true;
-    }
-    if(char.y<=platform.y+70 && char.y>platform.y+65 && char.x<platform.x+70*platform.width && char.x+char.width > platform.x){
-        topcollision=true;
-        console.log (platform)
-    }
-})}
-    
+
+
     //Main game interval
     intervalId = setInterval(() => {
         frame++;
         drawMain()}, 33)
 
+    //Main drawing function that will be updated on the interval
+    function drawMain(){
+        collisionsCleaner();  
+        ctx.clearRect(0, 0, screen.width,screen.height);
+        inputHandler();
+        checkCollisions();
+        generatePlatform();
+        drawCharacter(); 
+        gameOver();
+        gameTime()
+    }
 
-    //Here is the listener for the character movement
+    //Listener for the player input
+    function inputHandler (){
     document.addEventListener('keydown', function(event){
         if (event.key === 'w' &&  bottomcollision){
             jump = true;
@@ -77,20 +88,7 @@ function checkCollisions(){
             goLeft= false; 
         } 
     })
-
-    //Main drawing function that will be updated on the interval
-    function drawMain(){
-        rightcollision=false;
-        leftcollision=false;
-        bottomcollision=false;
-        topcollision=false;
-        ctx.clearRect(0, 0, screen.width,screen.height);
-        checkCollisions()
-        generatePlatform();
-        drawCharacter();
-
-        
-    }
+}
 
     //Updates the Player character
     function drawCharacter(){
@@ -102,12 +100,11 @@ function checkCollisions(){
 
     //Here is the logic for the character movement
     function characterMove(){
-
         char.y++;
         if (!bottomcollision){char.y++}
         if (jump && framejump +60 > frame && !topcollision){
             if (char.direction === 'right' && !rightcollision){
-                char.y-=5
+                char.y-=5;
                 if (char.x + char.width < screen.width){char.x += 5}
                 else {char.x =0};
             }
@@ -134,13 +131,10 @@ function checkCollisions(){
 
     //Creates a platform in the coordinates and of the width specified and pushes it into an array
     function generatePlatform (){
-
         for (i=0; i<platforms.length; i++){
-            //let platfomrCount = Math.floor(Math.random()*8)
             for (let j =0; j< platforms[i].width; j++){
                 ctx.drawImage(fg, (platforms[i].x+ (70*j)), platforms[i].y);
-            }
-            
+            }          
             platforms[i].y++
             if ( platforms[i].y == 200){
                 let randy = Math.floor(Math.random()*400)
@@ -153,12 +147,44 @@ function checkCollisions(){
                 });
             }
         }
-        
     }
 
-    //Calculates coordinates to feed the generatePlatform function
+    // This function checks every platform created for collisions
+    function checkCollisions(){
+        platforms.forEach((platform, i)=>{
+         if (char.x+char.width>=platform.x && char.x+char.width<platform.x+5 && char.y<platform.y+70 && char.y+char.height>platform.y){
+            rightcollision = true;}
+        if (char.x<=platform.x+70*platform.width && char.x>platform.x-5+70*platform.width && char.y<platform.y+70 && char.y+char.height>platform.y){
+            leftcollision =true;
+        }
+        if(char.y+char.height>=platform.y && char.y+char.height<platform.y+5 && char.x<platform.x+70*platform.width && char.x+char.width > platform.x){
+            bottomcollision=true;
+        }
+        if(char.y<=platform.y+70 && char.y>platform.y+65 && char.x<platform.x+70*platform.width && char.x+char.width > platform.x){
+            topcollision=true;
+        }
+    })}
 
-    function randomizePlatform(){
-        generatePlatform()
+    //Cleans the collision booleans so that the character can move again
+    function collisionsCleaner(){
+        rightcollision=false;
+        leftcollision=false;
+        bottomcollision=false;
+        topcollision=false;
+    }
+
+    //Activates the game over
+    function gameOver(){
+        if (char.y>screen.height){
+            clearInterval(intervalId)
+            loadRetry()}
+    }
+   
+    //Calculates the game time
+    function gameTime(){
+        time = (frame/30).toFixed(0);
+        ctx.font = "30px Verdana"
+        ctx.fillText(`${time}`, 15, 30)
     }
 }
+        
