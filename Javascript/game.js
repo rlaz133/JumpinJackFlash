@@ -11,6 +11,9 @@ class Character{
 
 //startGame encompasses all the game functions to make sure they get loaded after clicking on Start.
 function startGame(){
+    let backgroudMusic = new Audio;
+    backgroudMusic.src = 'Starlit Skies-cut.mp3'
+    backgroudMusic.play();
     let screen = document.getElementById('canvas');
     screen.style.border = '3px solid black';
     screen.style.backgroundColor = '#3874F7';
@@ -134,7 +137,7 @@ function startGame(){
                 ctx.drawImage(fg, (platforms[i].x+ (70*j)), platforms[i].y);
             }          
             platforms[i].y++
-            if ( platforms[i].y == 100){
+            if ( platforms[i].y == 110){
                 // let randy = Math.floor(Math.random()*400)
                 let randx = Math.floor(Math.random()*630)
                 let randw = Math.floor(Math.random()*4) + 3
@@ -175,6 +178,8 @@ function startGame(){
     function gameOver(){
         if (char.y>screen.height){
             clearInterval(intervalId)
+            backgroudMusic.pause();
+            backgroudMusic.currentTime = 0;
             loadRetry()}
     }
    

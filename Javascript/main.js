@@ -9,10 +9,8 @@ function buildDom(htmlString) {
 function screenSelector(){
     let startBtn = document.querySelector('#start-btn');
     startBtn.addEventListener('click', ()=>loadGame());
-    let splashBtn = document.querySelector('#splash-btn');
-    splashBtn.addEventListener('click', ()=>loadSplash());
-
-
+    // let splashBtn = document.querySelector('#splash-btn');
+    // splashBtn.addEventListener('click', ()=>loadSplash());
 }
 
 //loads the game screen and kickstarts the canvas
@@ -28,7 +26,7 @@ function loadSplash(){
     document.getElementById('container').innerHTML='';
     let splashCode = buildDom(
         `<div id='splashScreen' class='screen'>
-            <h1 id='title'> Jumping Jack Flash</h1>
+            <h1 id='title'> Jumping<br> Jack Flash</h1>
             <button id="start-btn" class='button'>Start</button>
         </div>`
         )
