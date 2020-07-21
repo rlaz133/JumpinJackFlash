@@ -61,3 +61,26 @@ h1{
     text-decoration: underline;
 
 }
+
+ul{
+    list-style: none;
+    padding-left: 0;
+}
+h2{
+    text-align: center;
+}
+
+li{
+    height: 50px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+#instructions-panel{
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    border: 2px solid black;
+    padding: 40px 0;
+}
