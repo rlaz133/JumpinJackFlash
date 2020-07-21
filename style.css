@@ -81,6 +81,6 @@ li{
     display: flex;
     flex-direction: column;
     align-content: center;
-    border: 2px solid black;
+    /* border: 2px solid black; */
     padding: 40px 0;
 }

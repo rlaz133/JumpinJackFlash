@@ -11,9 +11,15 @@ class Character{
 
 //startGame encompasses all the game functions to make sure they get loaded after clicking on Start.
 function startGame(){
+
     let backgroudMusic = new Audio;
     backgroudMusic.src = 'Starlit Skies-cut.mp3'
     backgroudMusic.play();
+    let jumpsound = new Audio;
+    jumpsound.src = 'jumpsound.mp3';
+    let oversound = new Audio;
+    oversound.src = 'gameover.mp3'
+
     let screen = document.getElementById('canvas');
     screen.style.border = '3px solid black';
     screen.style.backgroundColor = '#3874F7';
@@ -68,6 +74,7 @@ function startGame(){
         if (event.key === 'w' &&  bottomcollision){
             jump = true;
             framejump = frame;
+            jumpsound.play();
         }
         else if (event.key === 'd'){
             goRight = true;
@@ -177,6 +184,7 @@ function startGame(){
     //Activates the game over
     function gameOver(){
         if (char.y>screen.height){
+            oversound.play();
             clearInterval(intervalId)
             backgroudMusic.pause();
             backgroudMusic.currentTime = 0;
