@@ -101,8 +101,11 @@ ol li{
     display: flex;
     justify-content: space-evenly;
 }
+ol li span{
+    width: 100px;
+}
 
-ol{
+#scoresList{
     width: 400px;
 }
 
@@ -112,7 +115,24 @@ ol{
 
 #back-btn{
     width: 400px;
-    font-size: 2em
+    font-size: 2em;
+}
+#clear-btn{
+    width: 400px;
+    font-size: 2em;
+}
+
+#back-btn:hover{
+    text-decoration: underline
+}
+#clear-btn:hover{
+    text-decoration: underline
+}
+
+#buttonbox{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 /* #highPanel{

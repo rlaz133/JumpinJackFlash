@@ -31,6 +31,7 @@ function loadSplash(){
         <h1> Jumping <br>Jack Flash</h1>
         <button id="start-btn" class='button'>Start</button>
         <button id="high-btn" class='button'>High Scores</button>
+        <input type="text" id="playerName" placeholder="Enter your name">
         <div id='instructions-panel'>
             <h2>Controls</h2>
             <ul id='instructions'>
@@ -69,15 +70,23 @@ function loadHigh(){
     document.getElementById('container').innerHTML='';
     let highCode = buildDom (`<div id='highScreen' class='screen'>
                                 <div id="highPanel">
-                                <h1>High Scores</h1>
+                                <h1>High<br> Scores</h1>
                                 <ol id='scoresList'>
-                                <li id='list-header'><span>Player</span><span>Score</span>
+                                <li id='list-header'><span>Player</span><span>Score</span></p>
                                 </ol>
                                 </div>
+                                <div id='buttonbox'>
+                                <button id="clear-btn" class='button'>Clear scores</button>
                                 <button id="back-btn" class='button'>Back to Title</button>
-                                <div>
+                                </div>
+                                </div>
                                 `)
     document.getElementById('container').appendChild(highCode)
+    let clearBtn = document.querySelector('#clear-btn');
+    clearBtn.addEventListener('click', ()=>{
+        localStorage.clear()
+        document.getElementById('scoresList').innerHTML=`<li id='list-header'><span>Player</span><span>Score</span></li>`;
+    })
     let backBtn = document.querySelector('#back-btn');
     backBtn.addEventListener('click', ()=>loadSplash());
 
@@ -89,6 +98,7 @@ function loadHigh(){
         //     else {return 0;}
         // })
         let entry = document.createElement('li');
+        entry.classList.add('entry')
         entry.innerHTML=`<span>${localStorage.key(i)}</span> <span>${localStorage.getItem(localStorage.key(i))}</span>`
         document.getElementById('scoresList').appendChild(entry);
     }
