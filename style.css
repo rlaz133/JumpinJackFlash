@@ -61,6 +61,14 @@ h1{
     text-decoration: underline;
 
 }
+#high-btn:hover{
+    text-decoration: underline;
+
+}
+#high-btn{
+    color: silver;
+    width: 500px;
+}
 
 ul{
     list-style: none;
@@ -77,9 +85,38 @@ li{
     align-items: center;
 }
 #instructions-panel{
+    height: 200px;
     width: 400px;
     display: flex;
     flex-direction: column;
     align-content: center;
     padding: 40px 0;
 }
+#highScreen{
+    justify-content: space-around;
+}
+
+ol li{
+    width: 400px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+ol{
+    width: 400px;
+}
+
+#list-header{
+    color: goldenrod
+}
+
+#back-btn{
+    width: 400px;
+    font-size: 2em
+}
+
+/* #highPanel{
+    display:flex;
+    flex-direction: column;
+    align-content: flex-start;
+} */

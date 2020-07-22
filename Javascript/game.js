@@ -10,7 +10,7 @@ class Character{
 }
 
 //startGame encompasses all the game functions to make sure they get loaded after clicking on Start.
-function startGame(){
+function startGame(playerName){
 
     let backgroudMusic = new Audio;
     backgroudMusic.src = 'Starlit Skies-cut.mp3'
@@ -245,11 +245,13 @@ function startGame(){
     function gameOver(){
         if (char.y>screen.height || spiketouched){
             oversound.play();
+            localStorage.setItem(playerName, gameTime())
             clearInterval(intervalId)
             backgroudMusic.pause();
             backgroudMusic.currentTime = 0;
             loadRetry()}
             spiketouched = false;
+         
     }
    
     //Calculates the game time
@@ -258,6 +260,7 @@ function startGame(){
         ctx.font = "30px JumpinFont"
         ctx.fillText(`${time}`, 15, 30)
     if (frame%300 ===0){diff++}
+    return time;
     }
 }
         
