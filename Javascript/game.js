@@ -25,9 +25,17 @@ function startGame(){
     screen.style.backgroundColor = '#3874F7';
     let ctx = screen.getContext('2d');
     let frame =0;
+
+    let diff =1;
+
+
     let randy = Math.floor(Math.random()*400)
     let randx = Math.floor(Math.random()*630)
-    let randw = Math.floor(Math.random()*4) + 3      
+    let randw = Math.floor(Math.random()*4) + 3   
+    let spikeX = randx+ (Math.floor(Math.random()*(randw-1)+1) *70)  
+    let spikeChance = Math.random()*(1+diff/10)
+    let hasSpike;
+    spikeChance<0.3 ? hasSpike=true : hasSpike=false
     let platforms =[
         {x: 0, y: 630, width:10},
         {x: 300, y: 430, width:3},
@@ -35,20 +43,32 @@ function startGame(){
         {x: 300, y:125, width:4},
         {x: randx, y: -70, width: randw}
     ];
+    let spikes = [
+        {x: spikeX, y:-140, chance: 0, exists: false},
+        {x: spikeX, y:-140, chance: 0, exists: false},
+        {x: spikeX, y:-140, chance: 0, exists: false},
+        {x: spikeX, y:-140, chance: 0, exists: false},
+        {x: spikeX, y:-140, chance: spikeChance, exists : hasSpike}, ]
     let char = new Character();
     let charpic = new Image();
     let goRight = false;
     let goLeft = false;
     let jump = false;
     let framejump =0;
+
     let fg = new Image();
     fg.src = 'grass.png';
+    let spike = new Image();
+    spike.src ='spikes.png'
+
+
     let rightcollision;
     let leftcollision;
     let bottomcollision;
     let topcollision;
     let seconds;
     let jumped = false;
+
 
 
 
@@ -115,7 +135,7 @@ function startGame(){
 
     //Here is the logic for the character movement
     function characterMove(){
-        char.y++;
+        char.y+=diff;
         if (!bottomcollision){char.y+=3}
         if (jump && framejump +60 > frame && !topcollision){
             if (char.direction === 'right' && !rightcollision){
@@ -150,16 +170,29 @@ function startGame(){
         for (i=0; i<platforms.length; i++){
             for (let j =0; j< platforms[i].width; j++){
                 ctx.drawImage(fg, (platforms[i].x+ (70*j)), platforms[i].y);
-            }          
-            platforms[i].y++
-            if ( platforms[i].y == 110){
-                // let randy = Math.floor(Math.random()*400)
+                if (spikes[i].exists){
+                ctx.drawImage (spike, spikes[i].x, spikes[i].y) 
+                }
+            }
+            platforms[i].y+=diff;
+            spikes[i].y+=diff;
+            if ( platforms[i].y == 110+diff){
                 let randx = Math.floor(Math.random()*630)
                 let randw = Math.floor(Math.random()*4) + 3
+                let spikeX = randx+ (Math.floor(Math.random()*(randw-1)+1) *70)  
+                let spikeChance = Math.random()
+                let hasSpike;
+                spikeChance<0.3 ? hasSpike=true : hasSpike=false
                 platforms.push ({
                     x: randx,
                     y: -70 ,
-                    width: randw,
+                    width: randw
+                })
+                spikes.push({
+                    x: spikeX,
+                    y: -140,
+                    chance: spikeChance,
+                    exists: hasSpike
                 });
             }
         }
@@ -178,8 +211,26 @@ function startGame(){
         }
         if(char.y<=platform.y+70 && char.y>platform.y+65 && char.x<platform.x+70*platform.width && char.x+char.width > platform.x){
             topcollision=true;
+            jump=false;
         }
-    })}
+    })
+
+//     platforms.forEach((spikes, i)=>{
+//         if (char.x+char.width>=spike.x && char.x+char.width<platform.x+5 && char.y<platform.y+70 && char.y+char.height>platform.y){
+//            rightcollision = true;}
+//        if (char.x<=platform.x+70*platform.width && char.x>platform.x-5+70*platform.width && char.y<platform.y+70 && char.y+char.height>platform.y){
+//            leftcollision =true;
+//        }
+//        if(char.y+char.height>=platform.y && char.y+char.height<platform.y+5 && char.x<platform.x+70*platform.width && char.x+char.width > platform.x){
+//            bottomcollision=true;
+//        }
+//        if(char.y<=platform.y+70 && char.y>platform.y+65 && char.x<platform.x+70*platform.width && char.x+char.width > platform.x){
+//            topcollision=true;
+//            jump=false;
+//        }
+//    })}
+
+}
 
     //Cleans the collision booleans so that the character can move again
     function collisionsCleaner(){
@@ -202,8 +253,9 @@ function startGame(){
     //Calculates the game time
     function gameTime(){
         time = (frame/30).toFixed(0);
-        ctx.font = "30px Verdana"
+        ctx.font = "30px JumpinFont"
         ctx.fillText(`${time}`, 15, 30)
+    if (frame%300 ===0){diff++}
     }
 }
         
