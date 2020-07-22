@@ -35,6 +35,7 @@ function startGame(){
     let spikeX = randx+ (Math.floor(Math.random()*(randw-1)+1) *70)  
     let spikeChance = Math.random()*(1+diff/10)
     let hasSpike;
+    let spiketouched =false;
     spikeChance<0.3 ? hasSpike=true : hasSpike=false
     let platforms =[
         {x: 0, y: 630, width:10},
@@ -44,11 +45,11 @@ function startGame(){
         {x: randx, y: -70, width: randw}
     ];
     let spikes = [
-        {x: spikeX, y:-140, chance: 0, exists: false},
-        {x: spikeX, y:-140, chance: 0, exists: false},
-        {x: spikeX, y:-140, chance: 0, exists: false},
-        {x: spikeX, y:-140, chance: 0, exists: false},
-        {x: spikeX, y:-140, chance: spikeChance, exists : hasSpike}, ]
+        {x: spikeX, y:-140,  exists: false},
+        {x: 370, y: 360,  exists: true},
+        {x: spikeX, y:-140,  exists: false},
+        {x: spikeX, y:-140,  exists: false},
+        {x: spikeX, y:-140,  exists : hasSpike}, ]
     let char = new Character();
     let charpic = new Image();
     let goRight = false;
@@ -191,7 +192,6 @@ function startGame(){
                 spikes.push({
                     x: spikeX,
                     y: -140,
-                    chance: spikeChance,
                     exists: hasSpike
                 });
             }
@@ -215,22 +215,23 @@ function startGame(){
         }
     })
 
-//     platforms.forEach((spikes, i)=>{
-//         if (char.x+char.width>=spike.x && char.x+char.width<platform.x+5 && char.y<platform.y+70 && char.y+char.height>platform.y){
-//            rightcollision = true;}
-//        if (char.x<=platform.x+70*platform.width && char.x>platform.x-5+70*platform.width && char.y<platform.y+70 && char.y+char.height>platform.y){
-//            leftcollision =true;
-//        }
-//        if(char.y+char.height>=platform.y && char.y+char.height<platform.y+5 && char.x<platform.x+70*platform.width && char.x+char.width > platform.x){
-//            bottomcollision=true;
-//        }
-//        if(char.y<=platform.y+70 && char.y>platform.y+65 && char.x<platform.x+70*platform.width && char.x+char.width > platform.x){
-//            topcollision=true;
-//            jump=false;
-//        }
-//    })}
+    spikes.forEach((spike, i)=>{
+        if (spike.exists ===true){
+            if (char.x+char.width>=spike.x && char.x+char.width<spike.x+5 && char.y<spike.y+70 && char.y+char.height>spike.y+30){
+            spiketouched = true;}
+            if (char.x<=spike.x+70 && char.x>spike.x-5+70 && char.y<spike.y+70 && char.y+char.height>spike.y+30){
+                spiketouched =true;
+            }
+            if(char.y+char.height>=spike.y+30 && char.y+char.height<spike.y+35 && char.x<spike.x+70 && char.x+char.width > spike.x){
+                spiketouched=true;
+            }
+            if(char.y<=spike.y+70 && char.y>spike.y+65 && char.x<spike.x+70 && char.x+char.width > spike.x){
+                spiketouched=true;
+            }
+    }
+   })}
 
-}
+
 
     //Cleans the collision booleans so that the character can move again
     function collisionsCleaner(){
@@ -242,12 +243,13 @@ function startGame(){
 
     //Activates the game over
     function gameOver(){
-        if (char.y>screen.height){
+        if (char.y>screen.height || spiketouched){
             oversound.play();
             clearInterval(intervalId)
             backgroudMusic.pause();
             backgroudMusic.currentTime = 0;
             loadRetry()}
+            spiketouched = false;
     }
    
     //Calculates the game time
