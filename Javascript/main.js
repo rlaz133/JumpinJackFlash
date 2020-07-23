@@ -90,16 +90,23 @@ function loadHigh(){
     let backBtn = document.querySelector('#back-btn');
     backBtn.addEventListener('click', ()=>loadSplash());
 
-    for (i=0; i<localStorage.length;i++){
-        console.log (localStorage)
-        // localStorage.sort((a, b) =>{
-        //     if (a > b){return 1;}
-        //     else if(a < b) {return -1;}
-        //     else {return 0;}
-        // })
+
+        let sortedStorage = new Array;
+        for (i=0; i<localStorage.length;i++){
+            if (localStorage.key(i).includes('Jumper')){
+                sortedStorage.push(
+                    {player: localStorage.key(i).split('::')[1],
+                    time: Number(localStorage.getItem(localStorage.key(i)))
+                    }
+                )}}
+        sortedStorage.sort((a, b) => b.time - a.time);
+
+
+    for (i=0; i<sortedStorage.length;i++){
+        console.log (sortedStorage)
         let entry = document.createElement('li');
-        entry.classList.add('entry')
-        entry.innerHTML=`<span>${localStorage.key(i)}</span> <span>${localStorage.getItem(localStorage.key(i))}</span>`
+        entry.classList.add('entry')     
+        entry.innerHTML=`<span>${sortedStorage[i].player}</span> <span>${sortedStorage[i].time}</span>`
         document.getElementById('scoresList').appendChild(entry);
     }
 

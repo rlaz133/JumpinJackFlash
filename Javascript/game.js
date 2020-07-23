@@ -29,14 +29,14 @@ function startGame(playerName){
     let diff =1;
 
 
-    let randy = Math.floor(Math.random()*400)
+    let randy = Math.floor(Math.random()*(400-5)+5)
     let randx = Math.floor(Math.random()*630)
-    let randw = Math.floor(Math.random()*4) + 3   
+    let randw = Math.floor(Math.random()*4) + 2   
     let spikeX = randx+ (Math.floor(Math.random()*(randw-1)+1) *70)  
-    let spikeChance = Math.random()*(1+diff/10)
+    let spikeChance = Math.random()*(1+diff)
     let hasSpike;
     let spiketouched =false;
-    spikeChance<0.3 ? hasSpike=true : hasSpike=false
+    spikeChance<0.4 ? hasSpike=true : hasSpike=false
     let platforms =[
         {x: 0, y: 630, width:10},
         {x: 300, y: 430, width:3},
@@ -245,7 +245,7 @@ function startGame(playerName){
     function gameOver(){
         if (char.y>screen.height || spiketouched){
             oversound.play();
-            localStorage.setItem(playerName, gameTime())
+            localStorage.setItem(`Jumper :: ${playerName}`, gameTime())
             clearInterval(intervalId)
             backgroudMusic.pause();
             backgroudMusic.currentTime = 0;
