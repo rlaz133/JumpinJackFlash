@@ -87,9 +87,9 @@ Definition of the different states and their transition (transition functions)
 ### Git
 URls for the project repo and deploy
 [Link Repo](https://github.com/rlaz133/JumpinJackFlash)
-[Link Deploy](http://github.com)
+[Link Deploy](https://rlaz133.github.io/JumpinJackFlash/)
 
 
 ### Slides
 URls for the project presentation (slides)
-[Link Slides.com](http://slides.com)
+[Link Slides.com](https://docs.google.com/presentation/d/17ZCwG4dG7oaewJQmovGi83nP1dM7-SsVb6UprDVYEvk/edit?usp=sharing)
