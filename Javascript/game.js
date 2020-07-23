@@ -145,7 +145,6 @@ function startGame(playerName){
                 ctx.drawImage(cloud, clouds[i].x, clouds[i].y);
                
             clouds[i].y+=diff/2;
-            console.log (clouds[i].y)
             if (clouds[i].y < 100+diff && clouds[i].y>100){
                 let randx = Math.floor(Math.random()*670);
                 clouds.push ({
@@ -283,11 +282,11 @@ function startGame(playerName){
     function gameOver(){
         if (char.y>screen.height || spiketouched){
             oversound.play();
-            localStorage.setItem(`Jumper :: ${playerName}`, gameTime())
+            localStorage.setItem(`Jumper::${playerName}::${Math.random()}`, gameTime())
             clearInterval(intervalId)
             backgroudMusic.pause();
             backgroudMusic.currentTime = 0;
-            loadRetry()
+            loadRetry(gameTime())
             spiketouched = false;}
             
          

@@ -47,10 +47,11 @@ function loadSplash(){
 }
 
 //loads the retry screen
-function loadRetry(){
+function loadRetry(time){
     document.getElementById('container').innerHTML='';
     let retryCode = buildDom (
         `<div id='retryScreen' class='screen' >
+            <h2>You have lasted for ${time} seconds</h2>
             <h1>Retry?</h1>
             <div>
               <button id="yes-btn" class ='button'>Yes</button>
@@ -67,6 +68,7 @@ function loadRetry(){
 }
 //loads the high scores screen
 function loadHigh(){
+            let sortedStorage = new Array;
     document.getElementById('container').innerHTML='';
     let highCode = buildDom (`<div id='highScreen' class='screen'>
                                 <div id="highPanel">
@@ -84,14 +86,19 @@ function loadHigh(){
     document.getElementById('container').appendChild(highCode)
     let clearBtn = document.querySelector('#clear-btn');
     clearBtn.addEventListener('click', ()=>{
-        localStorage.clear()
+        for (i=0; i<localStorage.length;i++){
+            if (localStorage.key(i).includes('Jumper')){
+                localStorage.removeItem(localStorage.key(i))
+            }
+        }
         document.getElementById('scoresList').innerHTML=`<li id='list-header'><span>Player</span><span>Score</span></li>`;
+        sortedStorage=[]
     })
     let backBtn = document.querySelector('#back-btn');
     backBtn.addEventListener('click', ()=>loadSplash());
 
+   
 
-        let sortedStorage = new Array;
         for (i=0; i<localStorage.length;i++){
             if (localStorage.key(i).includes('Jumper')){
                 sortedStorage.push(
@@ -102,8 +109,7 @@ function loadHigh(){
         sortedStorage.sort((a, b) => b.time - a.time);
 
 
-    for (i=0; i<sortedStorage.length;i++){
-        console.log (sortedStorage)
+    for (i=0; i<sortedStorage.length && i<10;i++){
         let entry = document.createElement('li');
         entry.classList.add('entry')     
         entry.innerHTML=`<span>${sortedStorage[i].player}</span> <span>${sortedStorage[i].time}</span>`
