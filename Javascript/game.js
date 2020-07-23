@@ -28,14 +28,14 @@ function startGame(playerName){
     let ctx = screen.getContext('2d');
     let frame =0;
 
-    let diff =1;
+    let diff =0.5;
 
 
     let randy = Math.floor(Math.random()*(400-5)+5)
     let randx = Math.floor(Math.random()*630)
     let randw = Math.floor(Math.random()*4) + 2   
     let spikeX = randx+ (Math.floor(Math.random()*(randw-1)+1) *70)  
-    let spikeChance = Math.random()*(1+diff)
+    let spikeChance = Math.random()+diff
     let hasSpike;
     let spiketouched =false;
     spikeChance<0.4 ? hasSpike=true : hasSpike=false
@@ -123,6 +123,9 @@ function startGame(playerName){
         else if (event.key === 'a'){
             goLeft= false; 
         } 
+        if (event.key === 'w'){
+            jump = false;
+        }
     })
 }
 
@@ -154,7 +157,7 @@ function startGame(playerName){
         }
         if (jump && framejump +60 === frame){
                 jump = false;
-                jumped = false;
+                
         }
         if (goRight && !jump && !rightcollision){
             if (char.x + char.width < screen.width){char.x += 5}
@@ -208,8 +211,9 @@ function startGame(playerName){
         if (char.x<=platform.x+70*platform.width && char.x>platform.x-5+70*platform.width && char.y<platform.y+70 && char.y+char.height>platform.y){
             leftcollision =true;
         }
-        if(char.y+char.height>=platform.y && char.y+char.height<platform.y+5 && char.x<platform.x+70*platform.width && char.x+char.width > platform.x){
+        if(char.y+char.height>=platform.y && char.y+char.height<platform.y+5 && char.x<platform.x+70*(platform.width) && char.x+char.width > platform.x){
             bottomcollision=true;
+            jumped = false;
         }
         if(char.y<=platform.y+70 && char.y>platform.y+65 && char.x<platform.x+70*platform.width && char.x+char.width > platform.x){
             topcollision=true;
@@ -251,8 +255,9 @@ function startGame(playerName){
             clearInterval(intervalId)
             backgroudMusic.pause();
             backgroudMusic.currentTime = 0;
-            loadRetry()}
-            spiketouched = false;
+            loadRetry()
+            spiketouched = false;}
+            
          
     }
    

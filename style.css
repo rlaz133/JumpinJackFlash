@@ -38,6 +38,11 @@ h1{
     text-align:center;
 }
 
+.button:active{
+    border:none
+
+}
+
 #yes-btn{
     color: green;
     
@@ -97,13 +102,15 @@ li{
 }
 
 ol li{
-    width: 400px;
+    width: 500px;
     display: flex;
     justify-content: space-evenly;
 }
 ol li span{
-    width: 100px;
+    width: 200px;
 }
+
+
 
 #scoresList{
     width: 400px;
