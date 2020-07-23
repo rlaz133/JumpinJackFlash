@@ -31,7 +31,7 @@ function startGame(playerName){
     let diff =0.5;
 
 
-    let randy = Math.floor(Math.random()*(400-5)+5)
+
     let randx = Math.floor(Math.random()*630)
     let randw = Math.floor(Math.random()*4) + 2   
     let spikeX = randx+ (Math.floor(Math.random()*(randw-1)+1) *70)  
@@ -52,12 +52,15 @@ function startGame(playerName){
         {x: spikeX, y:-140,  exists: false},
         {x: spikeX, y:-140,  exists: false},
         {x: spikeX, y:-140,  exists : hasSpike}, ]
+
+
     let char = new Character();
     let charpic = new Image();
     let goRight = false;
     let goLeft = false;
     let jump = false;
     let framejump =0;
+    let jumped = false;
 
     let fg = new Image();
     fg.src = 'grass.png';
@@ -69,8 +72,14 @@ function startGame(playerName){
     let leftcollision;
     let bottomcollision;
     let topcollision;
-    let seconds;
-    let jumped = false;
+    
+    let cloud = new Image();
+    cloud.src='cloud1.png'
+    let clouds = [
+        {x:-15, y: 270},
+        {x: 500, y: 130},
+        {x: 430, y:-71}]
+   
 
 
 
@@ -86,10 +95,11 @@ function startGame(playerName){
         ctx.clearRect(0, 0, screen.width,screen.height);
         inputHandler();
         checkCollisions();
+        drawClouds();
         generatePlatform();
         drawCharacter(); 
         gameOver();
-        gameTime()
+        gameTime();
     }
 
     //Listener for the player input
@@ -128,6 +138,26 @@ function startGame(playerName){
         }
     })
 }
+
+    //Puts clouds in the sky
+    function drawClouds(){
+        for (i=0; i<clouds.length; i++){
+                ctx.drawImage(cloud, clouds[i].x, clouds[i].y);
+               
+            clouds[i].y+=diff/2;
+            console.log (clouds[i].y)
+            if (clouds[i].y < 100+diff && clouds[i].y>100){
+                let randx = Math.floor(Math.random()*670);
+                clouds.push ({
+                x: randx,
+                y: -71
+                })
+            } 
+        }
+        
+    }
+
+
 
     //Updates the Player character
     function drawCharacter(){
@@ -170,6 +200,8 @@ function startGame(playerName){
             char.direction='left';
         }
     }
+
+
 
     //Creates a platform in the coordinates and of the width specified and pushes it into an array
     function generatePlatform (){
@@ -266,7 +298,7 @@ function startGame(playerName){
         time = (frame/30).toFixed(0);
         ctx.font = "30px JumpinFont"
         ctx.fillText(`${time}`, 15, 30)
-    if (frame%300 ===0){diff++}
+    if (frame%300 ===0){diff+=0.5}
     return time;
     }
 }
