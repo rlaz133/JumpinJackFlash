@@ -1,5 +1,6 @@
 # Project's name
 Jumping Jack Flash
+[GitHub Page](https://rlaz133.github.io/JumpinJackFlash/)
 
 ## Description
 Jumping Jack Flash is a platforming game where you control the character as he jumps from platform to platform in order to reach the goal situated on the top of the stage. The stage has an automatic vertical scroll, and the character has to be fast on his ascension since touching the bottom means game over.
@@ -81,15 +82,14 @@ Definition of the different states and their transition (transition functions)
 
 
 ### Trello
-[Link url](https://trello.com/b/Kf3s6baJ/jumpin-jack-flash-game)
+[Trello page](https://trello.com/b/Kf3s6baJ/jumpin-jack-flash-game)
 
 
 ### Git
 URls for the project repo and deploy
-[Link Repo](https://github.com/rlaz133/JumpinJackFlash)
-[Link Deploy](https://rlaz133.github.io/JumpinJackFlash/)
+[Repository](https://github.com/rlaz133/JumpinJackFlash)
+
 
 
 ### Slides
-URls for the project presentation (slides)
-[Link Slides.com](https://docs.google.com/presentation/d/17ZCwG4dG7oaewJQmovGi83nP1dM7-SsVb6UprDVYEvk/edit?usp=sharing)
+[Presentation](https://docs.google.com/presentation/d/17ZCwG4dG7oaewJQmovGi83nP1dM7-SsVb6UprDVYEvk/edit?usp=sharing)

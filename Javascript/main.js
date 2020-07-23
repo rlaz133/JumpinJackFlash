@@ -36,8 +36,8 @@ function loadSplash(){
             <h2>Controls</h2>
             <ul id='instructions'>
                 <li>Jump</li>
-                <li><img src="letter_w.png" alt="W Key" width = "50px" height="50px"></li>
-                <li>Left<img src="letter_a.png" alt="W Key" width = "50px" height="50px"><img src="letter_d.png" alt="W Key" width = "50px" height="50px"> Right</li>
+                <li><img src="Graphics\letter_w.png" alt="W Key" width = "50px" height="50px"></li>
+                <li>Left<img src="Graphics\letter_a.png" alt="W Key" width = "50px" height="50px"><img src="Graphics\letter_d.png" alt="W Key" width = "50px" height="50px"> Right</li>
             </ul>
         </div>
     </div>`
