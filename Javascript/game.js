@@ -12,6 +12,8 @@ class Character{
 //startGame encompasses all the game functions to make sure they get loaded after clicking on Start.
 function startGame(playerName){
 
+    if (!playerName){playerName='Jack Flash'}
+
     let backgroudMusic = new Audio;
     backgroudMusic.src = 'Starlit Skies-cut.mp3'
     backgroudMusic.play();
