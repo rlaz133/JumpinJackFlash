@@ -47,7 +47,7 @@ function loadSplash(){
 }
 
 //loads the retry screen
-function loadRetry(time){
+function loadRetry(time, player){
     document.getElementById('container').innerHTML='';
     let retryCode = buildDom (
         `<div id='retryScreen' class='screen' >
@@ -61,14 +61,14 @@ function loadRetry(time){
     )
     document.getElementById('container').appendChild(retryCode)
     let yesBtn = document.querySelector('#yes-btn');
-    yesBtn.addEventListener('click', ()=>loadGame());
+    yesBtn.addEventListener('click', ()=>loadGame(player));
     let noBtn = document.querySelector('#no-btn');
     noBtn.addEventListener('click', ()=>loadSplash());
     console.log (localStorage)
 }
 //loads the high scores screen
 function loadHigh(){
-            let sortedStorage = new Array;
+    let sortedStorage = new Array;
     document.getElementById('container').innerHTML='';
     let highCode = buildDom (`<div id='highScreen' class='screen'>
                                 <div id="highPanel">
@@ -78,22 +78,11 @@ function loadHigh(){
                                 </ol>
                                 </div>
                                 <div id='buttonbox'>
-                                <button id="clear-btn" class='button'>Clear scores</button>
                                 <button id="back-btn" class='button'>Back to Title</button>
                                 </div>
                                 </div>
                                 `)
     document.getElementById('container').appendChild(highCode)
-    let clearBtn = document.querySelector('#clear-btn');
-    clearBtn.addEventListener('click', ()=>{
-        for (i=0; i<localStorage.length;i++){
-            if (localStorage.key(i).includes('Jumper')){
-                localStorage.removeItem(localStorage.key(i))
-            }
-        }
-        document.getElementById('scoresList').innerHTML=`<li id='list-header'><span>Player</span><span>Score</span></li>`;
-        sortedStorage=[]
-    })
     let backBtn = document.querySelector('#back-btn');
     backBtn.addEventListener('click', ()=>loadSplash());
 
@@ -115,7 +104,6 @@ function loadHigh(){
         entry.innerHTML=`<span>${sortedStorage[i].player}</span> <span>${sortedStorage[i].time}</span>`
         document.getElementById('scoresList').appendChild(entry);
     }
-
 }
 
 

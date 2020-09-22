@@ -286,7 +286,7 @@ function startGame(playerName){
             clearInterval(intervalId)
             backgroudMusic.pause();
             backgroudMusic.currentTime = 0;
-            loadRetry(gameTime())
+            loadRetry(gameTime(), playerName)
             spiketouched = false;}
             
          
