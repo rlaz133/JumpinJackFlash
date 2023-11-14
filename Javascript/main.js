@@ -11,8 +11,6 @@ function screenSelector(){
     startBtn.addEventListener('click', ()=>loadGame(document.getElementById('playerName').value));
     let highBtn = document.querySelector('#high-btn');
     highBtn.addEventListener('click', ()=>loadHigh());
-    // let splashBtn = document.querySelector('#splash-btn');
-    // splashBtn.addEventListener('click', ()=>loadSplash());
 }
 
 //loads the game screen and kickstarts the canvas
