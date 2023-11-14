@@ -36,8 +36,8 @@ function loadSplash(){
             <h2>Controls</h2>
             <ul id='instructions'>
                 <li>Jump</li>
-                <li><img src="letter_w.png" alt="W Key" width = "50px" height="50px"></li>
-                <li>Left<img src="letter_a.png" alt="W Key" width = "50px" height="50px"><img src="letter_d.png" alt="W Key" width = "50px" height="50px"> Right</li>
+                <li><img src="images/keys/letter_w.png" alt="W Key" width = "50px" height="50px"></li>
+                <li>Left<img src="images/keys/letter_a.png" alt="A Key" width = "50px" height="50px"><img src="images/keys/letter_d.png" alt="D Key" width = "50px" height="50px"> Right</li>
             </ul>
         </div>
     </div>`
@@ -64,7 +64,6 @@ function loadRetry(time, player){
     yesBtn.addEventListener('click', ()=>loadGame(player));
     let noBtn = document.querySelector('#no-btn');
     noBtn.addEventListener('click', ()=>loadSplash());
-    console.log (localStorage)
 }
 //loads the high scores screen
 function loadHigh(){
