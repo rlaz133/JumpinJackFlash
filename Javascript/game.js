@@ -15,12 +15,12 @@ function startGame(playerName){
     if (!playerName){playerName='Jack Flash'}
 
     let backgroudMusic = new Audio;
-    backgroudMusic.src = 'Starlit Skies-cut.mp3'
+    backgroudMusic.src = 'sounds/Starlit Skies-cut.mp3'
     backgroudMusic.play();
     let jumpsound = new Audio;
-    jumpsound.src = 'jumpsound.mp3';
+    jumpsound.src = 'sounds/jumpsound.mp3';
     let oversound = new Audio;
-    oversound.src = 'gameover.mp3'
+    oversound.src = 'sounds/gameover.mp3'
 
     let screen = document.getElementById('canvas');
     screen.style.border = '3px solid black';
@@ -42,7 +42,7 @@ function startGame(playerName){
     let platforms =[
         {x: 0, y: 630, width:10},
         {x: 300, y: 430, width:3},
-        {x: 000, y:300, width:2},
+        {x: 0, y:300, width:2},
         {x: 300, y:125, width:4},
         {x: randx, y: -70, width: randw}
     ];
@@ -63,9 +63,9 @@ function startGame(playerName){
     let jumped = false;
 
     let fg = new Image();
-    fg.src = 'grass.png';
+    fg.src = 'images/scenario/grass.png';
     let spike = new Image();
-    spike.src ='spikes.png'
+    spike.src ='images/scenario/spikes.png'
 
 
     let rightcollision;
@@ -74,7 +74,7 @@ function startGame(playerName){
     let topcollision;
     
     let cloud = new Image();
-    cloud.src='cloud1.png'
+    cloud.src='images/scenario/cloud1.png'
     let clouds = [
         {x:-15, y: 270},
         {x: 500, y: 130},
@@ -160,10 +160,10 @@ function startGame(playerName){
 
     //Updates the Player character
     function drawCharacter(){
-        if (char.direction === 'right') {charpic.src = 'p1_stand.png';}
-        if (char.direction === 'right' && jump) {charpic.src = 'p1_jump.png'}
-        if (char.direction === 'left') {charpic.src = 'p1_stand_left.png';}
-        if (char.direction === 'left' && jump) {charpic.src = 'p1_jump_left.png';}
+        if (char.direction === 'right') {charpic.src = 'images/character/p1_stand.png';}
+        if (char.direction === 'right' && jump) {charpic.src = 'images/character/p1_jump.png'}
+        if (char.direction === 'left') {charpic.src = 'images/character/p1_stand_left.png';}
+        if (char.direction === 'left' && jump) {charpic.src = 'images/character/p1_jump_left.png';}
         characterMove();
         ctx.drawImage(charpic, char.x, char.y)
     }
