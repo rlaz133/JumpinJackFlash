@@ -14,13 +14,11 @@ function startGame(playerName){
 
     if (!playerName){playerName='Jack Flash'}
 
-    let backgroudMusic = new Audio;
-    backgroudMusic.src = 'sounds/Starlit Skies-cut.mp3'
+    const backgroudMusic = new Audio(ROUTES.MUSIC.BACKGROUND);
+    const jumpsound = new Audio(ROUTES.MUSIC.JUMP);
+    const oversound = new Audio(ROUTES.MUSIC.GAME_OVER);
+    
     backgroudMusic.play();
-    let jumpsound = new Audio;
-    jumpsound.src = 'sounds/jumpsound.mp3';
-    let oversound = new Audio;
-    oversound.src = 'sounds/gameover.mp3'
 
     let screen = document.getElementById('canvas');
     screen.style.border = '3px solid black';
@@ -63,9 +61,9 @@ function startGame(playerName){
     let jumped = false;
 
     let fg = new Image();
-    fg.src = 'images/scenario/grass.png';
+    fg.src = ROUTES.IMAGES.GRASS;
     let spike = new Image();
-    spike.src ='images/scenario/spikes.png'
+    spike.src = ROUTES.IMAGES.SPIKE;
 
 
     let rightcollision;
@@ -74,7 +72,7 @@ function startGame(playerName){
     let topcollision;
     
     let cloud = new Image();
-    cloud.src='images/scenario/cloud1.png'
+    cloud.src = ROUTES.IMAGES.CLOUD;
     let clouds = [
         {x:-15, y: 270},
         {x: 500, y: 130},
@@ -106,6 +104,7 @@ function startGame(playerName){
     function inputHandler (){
 
     document.addEventListener('keydown', function(event){
+        console.log('hola')
         if (event.key === 'w' &&  bottomcollision){
             jump = true;
             framejump = frame;
@@ -160,10 +159,10 @@ function startGame(playerName){
 
     //Updates the Player character
     function drawCharacter(){
-        if (char.direction === 'right') {charpic.src = 'images/character/p1_stand.png';}
-        if (char.direction === 'right' && jump) {charpic.src = 'images/character/p1_jump.png'}
-        if (char.direction === 'left') {charpic.src = 'images/character/p1_stand_left.png';}
-        if (char.direction === 'left' && jump) {charpic.src = 'images/character/p1_jump_left.png';}
+        if (char.direction === 'right' && !jump) {charpic.src = ROUTES.IMAGES.CHARACTER.STAND_RIGHT;}
+        if (char.direction === 'right' && jump) {charpic.src = ROUTES.IMAGES.CHARACTER.JUMP_RIGHT;}
+        if (char.direction === 'left' && !jump) {charpic.src = ROUTES.IMAGES.CHARACTER.STAND_LEFT;}
+        if (char.direction === 'left' && jump) {charpic.src = ROUTES.IMAGES.CHARACTER.JUMP_LEFT;}
         characterMove();
         ctx.drawImage(charpic, char.x, char.y)
     }
