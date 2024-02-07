@@ -12,14 +12,7 @@ The screen will continually scroll upwards and it will have platforms for the PC
 Some platforms will have spikes, which will kill the PC if touched.
 Winning condition: reaching the goal at the top. Losing condition: touching the bottom of the screen or a set of spikes.
 
-
-## Backlog
-- Add an alternative control mode (wasd or arrows)
-- Add sound effects
-- Add difficulty levels that modify the speed of the scroll
-
-
-## Data structure
+## Structure
 
 ### Main.js
 

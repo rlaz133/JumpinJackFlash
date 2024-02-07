@@ -1,108 +1,126 @@
-// auxiliary; turns a text string into a node with the same html code
+
+// AUXILIARIES 
+
+/**
+ * Turns a text string into a node with the same html code
+ * @param {string} htmlString HTML code to be built
+ * @returns A div HTML element
+ */
 function buildDom(htmlString) {
     let div = document.createElement("div");
     div.innerHTML = htmlString;
     return div.children[0];
   }
 
-//listens to the buttons to load the different screens and calls the relevant function
-function screenSelector(){
-    let startBtn = document.querySelector('#start-btn');
-    startBtn.addEventListener('click', ()=>loadGame(document.getElementById('playerName').value));
-    let highBtn = document.querySelector('#high-btn');
-    highBtn.addEventListener('click', ()=>loadHigh());
+/** Cleans the screen */
+function cleanScreen(){
+    document.getElementById('container').innerHTML='';
 }
 
-//loads the game screen and kickstarts the canvas
+/**
+ * Loads the screen
+ * @param {string} htmlString 
+ */
+function loadScreen(htmlString){
+    cleanScreen();
+    let htmlElement = buildDom(htmlString)
+    document.getElementById('container').appendChild(htmlElement)
+};
+
+/**
+ * Adds button click event listener
+ * @param {string} buttonSelector 
+ * @param {function} callback 
+ */
+function addButtonListener(buttonSelector, callback){
+    let button = document.querySelector(buttonSelector);
+    button.addEventListener('click', callback)
+}
+
+/** Listens to the buttons to load the different screens and calls the relevant function */
+function screenSelector(){
+    const player = document.getElementById('playerName').value;
+    addButtonListener('#start-btn', ()=>loadGame(player));
+    addButtonListener('#high-btn', ()=>loadHigh())
+}
+
+//SCREEN LOADERS
+
+/** Loads the game screen and kickstarts the canvas*/
 function loadGame(Playername){
-    document.getElementById('container').innerHTML='';
-    let canvasCode = buildDom(`<canvas id='canvas' width=700px; height=700px></canvas>`);
-    document.getElementById('container').appendChild(canvasCode)
+    loadScreen(INNER_STRINGS.CANVAS);
     startGame(Playername);
 }
 
-//loads the splash screen
+/** Loads the splash screen */
 function loadSplash(){
-    document.getElementById('container').innerHTML='';
-    let splashCode = buildDom(
-        `<div id='splashScreen' class='screen'>
-        <h1> Jumping <br>Jack Flash</h1>
-        <button id="start-btn" class='button'>Start</button>
-        <button id="high-btn" class='button'>High Scores</button>
-        <input type="text" id="playerName" placeholder="Enter your name">
-        <div id='instructions-panel'>
-            <h2>Controls</h2>
-            <ul id='instructions'>
-                <li>Jump</li>
-                <li><img src="images/keys/letter_w.png" alt="W Key" width = "50px" height="50px"></li>
-                <li>Left<img src="images/keys/letter_a.png" alt="A Key" width = "50px" height="50px"><img src="images/keys/letter_d.png" alt="D Key" width = "50px" height="50px"> Right</li>
-            </ul>
-        </div>
-    </div>`
-        )
-    document.getElementById('container').appendChild(splashCode)
+    loadScreen(INNER_STRINGS.SPLASH);     
     screenSelector();
 }
 
-//loads the retry screen
-function loadRetry(time, player){
-    document.getElementById('container').innerHTML='';
-    let retryCode = buildDom (
-        `<div id='retryScreen' class='screen' >
-            <h2>You have lasted for ${time} seconds</h2>
-            <h1>Retry?</h1>
-            <div>
-              <button id="yes-btn" class ='button'>Yes</button>
-              <button id="no-btn" class = 'button'>No</button>
-            </div>
-    </div>`
-    )
-    document.getElementById('container').appendChild(retryCode)
-    let yesBtn = document.querySelector('#yes-btn');
-    yesBtn.addEventListener('click', ()=>loadGame(player));
-    let noBtn = document.querySelector('#no-btn');
-    noBtn.addEventListener('click', ()=>loadSplash());
+//Interpolate the time in the string
+/**
+ * Loads the retry screen
+ * @param {number} time Number of seconds the user lasted 
+ * @param {string} player Name of the player
+ */
+function loadRetry(time, player){    
+    loadScreen(INNER_STRINGS.RETRY);
+    document.getElementById('score').innerHTML= time;
+    addButtonListener('#yes-btn', ()=>loadGame(player));
+    addButtonListener('#no-btn', ()=>loadSplash());
 }
-//loads the high scores screen
+
+/** Loads the high scores screen */
 function loadHigh(){
-    let sortedStorage = new Array;
-    document.getElementById('container').innerHTML='';
-    let highCode = buildDom (`<div id='highScreen' class='screen'>
-                                <div id="highPanel">
-                                <h1>High<br> Scores</h1>
-                                <ol id='scoresList'>
-                                <li id='list-header'><span>Player</span><span>Score</span></p>
-                                </ol>
-                                </div>
-                                <div id='buttonbox'>
-                                <button id="back-btn" class='button'>Back to Title</button>
-                                </div>
-                                </div>
-                                `)
-    document.getElementById('container').appendChild(highCode)
-    let backBtn = document.querySelector('#back-btn');
-    backBtn.addEventListener('click', ()=>loadSplash());
-
-   
-
-        for (i=0; i<localStorage.length;i++){
-            if (localStorage.key(i).includes('Jumper')){
-                sortedStorage.push(
-                    {player: localStorage.key(i).split('::')[1],
-                    time: Number(localStorage.getItem(localStorage.key(i)))
-                    }
-                )}}
-        sortedStorage.sort((a, b) => b.time - a.time);
+    loadScreen(INNER_STRINGS.HIGH_SCORES);
+    addButtonListener('#back-btn', ()=>loadSplash());
+    const highScores = readHighScores();
+    buildHighScoresList(highScores, 5)
+}
 
 
-    for (i=0; i<sortedStorage.length && i<5;i++){
-        let entry = document.createElement('li');
+//HIGH SCORES FEATURE
+
+/**
+ * Reads high scores from local storage
+ * @returns Array with the high scores sorted by score
+ */
+function readHighScores(){
+    const sortedStorage = new Array;
+
+    for (i=0; i<localStorage.length;i++){
+        if (localStorage.key(i).includes('Jumper')){
+            sortedStorage.push(
+                {player: localStorage.key(i).split('::')[1],
+                time: Number(localStorage.getItem(localStorage.key(i)))
+                }
+            )}}
+    sortedStorage.sort((a, b) => b.time - a.time);
+    return sortedStorage
+}
+
+/**
+ * Builds a row of the high scores list.
+ * @param {string} player - The player that got the score
+ * @param {string} time - The score of the player
+ */
+function buildHighScoresRow(player, time){
+    let entry = document.createElement('li');
         entry.classList.add('entry')     
-        entry.innerHTML=`<span>${sortedStorage[i].player}</span> <span>${sortedStorage[i].time}</span>`
+        entry.innerHTML=`<span>${player}</span> <span>${time}</span>`
         document.getElementById('scoresList').appendChild(entry);
+}
+
+/**
+ * Builds the whole high scores list.
+ * @param {array} highScores - The list of high scores already sorted
+ * @param {number} maxNumberOfScores - How many scores will be listed
+ */
+function buildHighScoresList(highScores, maxNumberOfScores){
+    for (i=0; i<highScores.length && i<maxNumberOfScores; i++){
+        buildHighScoresRow(highScores[i].player, highScores[i].time)
     }
 }
-
-
 
 window.addEventListener('load', ()=>{screenSelector()})
